@@ -259,6 +259,7 @@ public class Main {
     }
 
     private static void task16() throws IOException {
+        System.out.println("============================TASK 16============================");
         List<Animal> animals = Util.getAnimals();
         Map<String, List<String>> everyCountryBreeds = animals.stream()
                 .filter(animal -> animal.getAge() >= 7 && animal.getAge() < 17)
