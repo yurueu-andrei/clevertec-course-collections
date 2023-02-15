@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -38,6 +39,7 @@ public class Main {
         task13();
         task14();
         task15();
+        task16();
     }
 
     private static void task1() throws IOException {
@@ -254,6 +256,23 @@ public class Main {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         System.out.println(totalCost + "$");
+    }
+
+    private static void task16() throws IOException {
+        List<Animal> animals = Util.getAnimals();
+        Map<String, List<String>> everyCountryBreeds = animals.stream()
+                .filter(animal -> animal.getAge() >= 7 && animal.getAge() < 17)
+                .collect(Collectors.groupingBy(Animal::getOrigin))
+                .entrySet().stream()
+                .collect(Collectors.toMap(e -> e.getKey(),
+                        e -> e.getValue().stream()
+                                .map(Animal::getBread)
+                                .distinct()
+                                .sorted()
+                                .limit(3)
+                                .collect(Collectors.toList())));
+
+        System.out.println(everyCountryBreeds);
     }
 
     private static List<Car> getAndExtractEchelonFromList(List<Car> list, Predicate<Car> predicate) {
